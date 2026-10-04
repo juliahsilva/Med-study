@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MED STUDY</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#07111f;
+    color:white;
+    min-height:100vh;
+}
+
+button{
+    font:inherit;
+    cursor:pointer;
+}
+
+.app{
+    max-width:700px;
+    margin:auto;
+    min-height:100vh;
+    padding-bottom:80px;
+}
+
+/* TOPO */
+
+header{
+    padding:25px 20px 15px;
+    background:linear-gradient(135deg,#0b3150,#087f8c);
+    border-radius:0 0 28px 28px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.logo span{
+    color:#35e0bd;
+}
+
+.subtitle{
+    color:#c9e8ed;
+    margin-top:5px;
+}
+
+/* TELAS */
+
+.screen{
+    display:none;
+    padding:20px;
+}
+
+.screen.active{
+    display:block;
+}
+
+/* DASHBOARD */
+
+.welcome{
+    margin:10px 0 20px;
+}
+
+.welcome h1{
+    font-size:27px;
+    margin-bottom:6px;
+}
+
+.welcome p{
+    color:#91a6b9;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:#101f32;
+    border:1px solid #ffffff12;
+    border-radius:18px;
+    padding:15px 8px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:22px;
+    color:#35e0bd;
+}
+
+.stat small{
+    color:#8fa2b5;
+}
+
+.card{
+    background:#101f32;
+    border:1px solid #ffffff12;
+    border-radius:20px;
+    padding:18px;
+    margin-bottom:15px;
+}
+
+.card h2{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.card p{
+    color:#9eb0c2;
+    line-height:1.5;
+}
+
+.progress{
+    height:9px;
+    background:#26384d;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:12px;
+}
+
+.progress div{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#20d6b2,#4db6ff);
+    transition:.4s;
+}
+
+/* BOTÕES */
+
+.main-btn{
+    width:100%;
+    border:0;
+    border-radius:15px;
+    padding:15px;
+    margin-top:10px;
+    background:linear-gradient(135deg,#14c9a7,#188de0);
+    color:white;
+    font-weight:bold;
+}
+
+.secondary{
+    background:#182b40;
+    border:1px solid #ffffff15;
+    color:white;
+    border-radius:14px;
+    padding:12px;
+    width:100%;
+    margin-top:8px;
+}
+
+/* MATÉRIAS */
+
+.subject{
+    background:#101f32;
+    border:1px solid #ffffff12;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    transition:.2s;
+}
+
+.subject:active{
+    transform:scale(.97);
+}
+
+.subject-icon{
+    width:50px;
+    height:50px;
+    display:grid;
+    place-items:center;
+    border-radius:15px;
+    background:#17374a;
+    font-size:25px;
+}
+
+.subject h3{
+    margin-bottom:4px;
+}
+
+.subject p{
+    color:#8197aa;
+    font-size:13px;
+}
+
+/* QUESTÕES */
+
+.question{
+    font-size:19px;
+    line-height:1.4;
+    margin:15px 0;
+}
+
+.option{
+    width:100%;
+    text-align:left;
+    padding:15px;
+    margin:7px 0;
+    border-radius:13px;
+    border:1px solid #ffffff15;
+    background:#17283c;
+    color:white;
+}
+
+.option:hover{
+    background:#20364e;
+}
+
+.correct{
+    background:#116044 !important;
+}
+
+.wrong{
+    background:#69313b !important;
+}
+
+.explanation{
+    margin-top:15px;
+    padding:14px;
+    border-radius:14px;
+    background:#15283b;
+    color:#b8cad9;
+    line-height:1.5;
+}
+
+/* FLASHCARD */
+
+.flashcard{
+    min-height:280px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:linear-gradient(135deg,#152f49,#123e47);
+    border-radius:25px;
+    padding:25px;
+    font-size:22px;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+.flash-buttons{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.flash-buttons button{
+    padding:13px 5px;
+    border:0;
+    border-radius:12px;
+    color:white;
+    background:#263d53;
+}
+
+/* MODO CLÍNICO */
+
+.case{
+    border-left:4px solid #35e0bd;
+    padding-left:15px;
+    margin:15px 0;
+}
+
+.warning{
+    background:#4a3520;
+    border-radius:14px;
+    padding:13px;
+    color:#ffd99a;
+    font-size:12px;
+    line-height:1.5;
+}
+
+/* MENU */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:700px;
+    height:70px;
+    background:#0c1929f5;
+    backdrop-filter:blur(12px);
+    border-top:1px solid #ffffff12;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    z-index:10;
+}
+
+.nav-btn{
+    background:none;
+    border:0;
+    color:#71879b;
+    font-size:11px;
+}
+
+.nav-btn span{
+    display:block;
+    font-size:21px;
+    margin-bottom:3px;
+}
+
+.nav-btn.active{
+    color:#35e0bd;
+}
+
+/* TÍTULO */
+
+.page-title{
+    font-size:25px;
+    margin-bottom:6px;
+}
+
+.page-subtitle{
+    color:#879caf;
+    margin-bottom:20px;
+}
+
+/* DESAFIO */
+
+.challenge{
+    background:linear-gradient(135deg,#25345c,#153e49);
+}
+
+/* RESPONSIVO */
+
+@media(min-width:600px){
+    .stats{
+        gap:15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+    <div class="logo">MED <span>STUDY</span></div>
+    <div class="subtitle">Prepare-se hoje para cuidar amanhã.</div>
+</header>
+
+<!-- INÍCIO -->
+
+<section id="home" class="screen active">
+
+<div class="welcome">
+    <h1>Olá, estudante 👋</h1>
+    <p>Continue sua jornada rumo à Medicina.</p>
+</div>
+
+<div class="stats">
+    <div class="stat">
+        <strong id="xp">0</strong>
+        <small>XP</small>
+    </div>
+
+    <div class="stat">
+        <strong id="level">1</strong>
+        <small>Nível</small>
+    </div>
+
+    <div class="stat">
+        <strong id="streak">1</strong>
+        <small>Dias 🔥</small>
+    </div>
+</div>
+
+<div class="card">
+    <h2>🎯 Progresso da jornada</h2>
+    <p>Continue estudando para desbloquear novos níveis.</p>
+
+    <div class="progress">
+        <div id="progressBar"></div>
+    </div>
+
+    <p id="progressText" style="margin-top:8px">0% concluído</p>
+</div>
+
+<div class="card challenge">
+    <h2>🔥 Desafio de hoje</h2>
+    <p>Responda uma questão e ganhe XP.</p>
+    <button class="main-btn" onclick="go('questions')">
+        COMEÇAR DESAFIO
+    </button>
+</div>
+
+<div class="card">
+    <h2>📚 Continue estudando</h2>
+    <p>Comece pelos fundamentos da Biologia.</p>
+    <button class="main-btn" onclick="openSubject('Biologia')">
+        CONTINUAR
+    </button>
+</div>
+
+</section>
+
+
+<!-- ESTUDOS -->
+
+<section id="study" class="screen">
+
+<h1 class="page-title">📚 Trilha de Estudos</h1>
+<p class="page-subtitle">Construa sua base passo a passo.</p>
+
+<div class="card">
+<h2>🟢 Fundamentos</h2>
+<p>O começo da sua jornada.</p>
+</div>
+
+<div class="subject" onclick="openSubject('Biologia')">
+<div class="subject-icon">🧬</div>
+<div>
+<h3>Biologia</h3>
+<p>Células, genética e sistemas.</p>
+</div>
+</div>
+
+<div class="subject" onclick="openSubject('Química')">
+<div class="subject-icon">⚗️</div>
+<div>
+<h3>Química</h3>
+<p>Matéria, átomos e reações.</p>
+</div>
+</div>
+
+<div class="subject" onclick="openSubject('Física')">
+<div class="subject-icon">⚡</div>
+<div>
+<h3>Física</h3>
+<p>Movimento, energia e forças.</p>
+</div>
+</div>
+
+<div class="subject" onclick="openSubject('Anatomia')">
+<div class="subject-icon">🫀</div>
+<div>
+<h3>Anatomia</h3>
+<p>Conheça o corpo humano.</p>
+</div>
+</div>
+
+<div class="card">
+<h2>🟡 Intermediário</h2>
+<p>Desbloqueie após concluir os fundamentos.</p>
+</div>
+
+<div class="subject">
+<div class="subject-icon">🧪</div>
+<div>
+<h3>Bioquímica</h3>
+<p>Moléculas e processos biológicos.</p>
+</div>
+</div>
+
+<div class="subject">
+<div class="subject-icon">🦠</div>
+<div>
+<h3>Microbiologia</h3>
+<p>Bactérias, vírus e fungos.</p>
+</div>
+</div>
+
+<div class="subject">
+<div class="subject-icon">🧠</div>
+<div>
+<h3>Fisiologia</h3>
+<p>Como o organismo funciona.</p>
+</div>
+</div>
+
+<div class="card">
+<h2>🔴 Avançado</h2>
+<p>Conteúdos para uma preparação mais profunda.</p>
+</div>
+
+<div class="subject">
+<div class="subject-icon">💊</div>
+<div>
+<h3>Farmacologia</h3>
+<p>Medicamentos e seus efeitos.</p>
+</div>
+</div>
+
+<div class="subject">
+<div class="subject-icon">🔬</div>
+<div>
+<h3>Patologia</h3>
+<p>Doenças e alterações do organismo.</p>
+</div>
+</div>
+
+<div class="subject">
+<div class="subject-icon">🏥</div>
+<div>
+<h3>Semiologia</h3>
+<p>Introdução à avaliação clínica.</p>
+</div>
+</div>
+
+</section>
+
+
+<!-- QUESTÕES -->
+
+<section id="questions" class="screen">
+
+<h1 class="page-title">🧠 Questões</h1>
+<p class="page-subtitle">Teste seus conhecimentos.</p>
+
+<div class="card">
+
+<div id="questionArea"></div>
+
+</div>
+
+</section>
+
+
+<!-- FLASHCARDS -->
+
+<section id="flashcards" class="screen">
+
+<h1 class="page-title">🃏 Flashcards</h1>
+<p class="page-subtitle">Revise conceitos importantes.</p>
+
+<div class="flashcard" id="flashcard" onclick="flipCard()">
+Qual é a principal função das hemácias?
+</div>
+
+<div class="flash-buttons">
+
+<button onclick="flashAnswer('Fácil')">
+Fácil
+</button>
+
+<button onclick="flashAnswer('Médio')">
+Médio
+</button>
+
+<button onclick="flashAnswer('Difícil')">
+Difícil
+</button>
+
+</div>
+
+</section>
+
+
+<!-- PROGRESSO -->
+
+<section id="progress" class="screen">
+
+<h1 class="page-title">🏆 Meu Progresso</h1>
+<p class="page-subtitle">Veja sua evolução.</p>
+
+<div class="card">
+<h2>⭐ XP total</h2>
+<p id="bigXP">0 XP</p>
+
+<div class="progress">
+<div id="xpBar"></div>
+</div>
+</div>
+
+<div class="card">
+<h2>🧠 Questões respondidas</h2>
+<p id="answered">0</p>
+</div>
+
+<div class="card">
+<h2>🎯 Taxa de acerto</h2>
+<p id="accuracy">0%</p>
+</div>
+
+<div class="card">
+<h2>📚 Matérias</h2>
+<p>Biologia █████░░░░░ 50%</p>
+<p>Química ██░░░░░░░░ 20%</p>
+<p>Anatomia █░░░░░░░░░ 10%</p>
+</div>
+
+</section>
+
+
+<!-- PERFIL -->
+
+<section id="profile" class="screen">
+
+<h1 class="page-title">👤 Perfil</h1>
+<p class="page-subtitle">Sua jornada no MED STUDY.</p>
+
+<div class="card">
+<h2>🎓 Estudante</h2>
+<p>Rumo à Medicina</p>
+</div>
+
+<div class="card">
+<h2>🔥 Sequência</h2>
+<p>Você está estudando e construindo seu futuro.</p>
+</div>
+
+<div class="card">
+<h2>⚙️ Configurações</h2>
+
+<button class="secondary" onclick="toggleTheme()">
+🌙 Alternar tema
+</button>
+
+<button class="secondary" onclick="resetProgress()">
+🗑️ Resetar progresso
+</button>
+
+</div>
+
+</section>
+
+
+<!-- MATÉRIA -->
+
+<section id="subject" class="screen">
+
+<button class="secondary" onclick="go('study')">
+← Voltar para matérias
+</button>
+
+<h1 id="subjectTitle" class="page-title" style="margin-top:20px">
+Biologia
+</h1>
+
+<div class="card">
+<h2>📖 Introdução</h2>
+<p id="subjectContent">
+A Biologia é a ciência que estuda os seres vivos, sua organização,
+funcionamento, evolução e relação com o ambiente.
+</p>
+</div>
+
+<div class="card">
+<h2>🧬 Conceito importante</h2>
+<p>
+A célula é considerada a unidade básica estrutural e funcional dos
+seres vivos.
+</p>
+</div>
+
+<div class="card">
+<h2>🎯 O que estudar</h2>
+<p>
+• Célula<br>
+• Membrana plasmática<br>
+• Organelas<br>
+• DNA<br>
+• RNA<br>
+• Genética<br>
+• Divisão celular
+</p>
+</div>
+
+<button class="main-btn" onclick="go('questions')">
+🧠 RESPONDER QUESTÕES
+</button>
+
+</section>
+
+
+<!-- MODO CLÍNICO -->
+
+<section id="clinical" class="screen">
+
+<h1 class="page-title">🏥 Modo Clínico</h1>
+<p class="page-subtitle">Resolva casos educativos.</p>
+
+<div class="card">
+
+<h2>Caso clínico #001</h2>
+
+<div class="case">
+
+<p>
+Paciente masculino, 24 anos, apresenta febre, tosse e dor no peito
+há três dias.
+</p>
+
+<br>
+
+<p>
+Temperatura: 38,5°C
+</p>
+
+<p>
+Frequência cardíaca: 92 bpm
+</p>
+
+<p>
+Saturação: 96%
+</p>
+
+</div>
+
+<h3 style="margin:15px 0">
+Qual hipótese deve ser considerada?
+</h3>
+
+<button class="option" onclick="clinicalAnswer(this,false)">
+A) Fratura
+</button>
+
+<button class="option" onclick="clinicalAnswer(this,true)">
+B) Infecção respiratória
+</button>
+
+<button class="option" onclick="clinicalAnswer(this,false)">
+C) Lesão muscular
+</button>
+
+<button class="option" onclick="clinicalAnswer(this,false)">
+D) Desidratação isolada
+</button>
+
+<div id="clinicalResult"></div>
+
+</div>
+
+<div class="warning">
+⚠️ Conteúdo exclusivamente educacional.
+Não substitui avaliação, diagnóstico ou orientação de um profissional
+de saúde.
+</div>
+
+</section>
+
+
+<!-- MENU -->
+
+<nav class="bottom-nav">
+
+<button class="nav-btn active" onclick="go('home')">
+<span>🏠</span>
+Início
+</button>
+
+<button class="nav-btn" onclick="go('study')">
+<span>📚</span>
+Estudos
+</button>
+
+<button class="nav-btn" onclick="go('questions')">
+<span>🧠</span>
+Questões
+</button>
+
+<button class="nav-btn" onclick="go('progress')">
+<span>🏆</span>
+Progresso
+</button>
+
+<button class="nav-btn" onclick="go('profile')">
+<span>👤</span>
+Perfil
+</button>
+
+</nav>
+
+</div>
+
+
+<script>
+
+let xp = Number(localStorage.getItem("med_xp")) || 0;
+let answered = Number(localStorage.getItem("med_answered")) || 0;
+let correct = Number(localStorage.getItem("med_correct")) || 0;
+
+const questions = [
+
+{
+question:"Qual é a unidade básica estrutural e funcional dos seres vivos?",
+options:["Tecido","Órgão","Célula","Sistema"],
+answer:2,
+explanation:"A célula é considerada a unidade básica estrutural e funcional dos seres vivos."
+},
+
+{
+question:"Qual molécula contém a maior parte da informação genética dos seres humanos?",
+options:["ATP","DNA","Glicose","Hemoglobina"],
+answer:1,
+explanation:"O DNA armazena a informação genética das células."
+},
+
+{
+question:"Qual órgão é responsável principalmente pela circulação do sangue?",
+options:["Pulmão","Fígado","Coração","Rim"],
+answer:2,
+explanation:"O coração bombeia o sangue através do sistema circulatório."
+}
+
+];
+
+let currentQuestion=0;
+let answeredQuestion=false;
+
+function save(){
+
+localStorage.setItem("med_xp",xp);
+localStorage.setItem("med_answered",answered);
+localStorage.setItem("med_correct",correct);
+
+updateUI();
+
+}
+
+function updateUI(){
+
+document.getElementById("xp").textContent=xp;
+document.getElementById("bigXP").textContent=xp+" XP";
+
+let level=Math.floor(xp/100)+1;
+
+document.getElementById("level").textContent=level;
+
+let progress=xp%100;
+
+document.getElementById("progressBar").style.width=progress+"%";
+document.getElementById("xpBar").style.width=progress+"%";
+
+document.getElementById("progressText").textContent=
+progress+"% para o próximo nível";
+
+document.getElementById("answered").textContent=answered;
+
+let accuracy=answered ? Math.round((correct/answered)*100) : 0;
+
+document.getElementById("accuracy").textContent=accuracy+"%";
+
+}
+
+function go(screen){
+
+document.querySelectorAll(".screen").forEach(
+s=>s.classList.remove("active")
+);
+
+document.getElementById(screen).classList.add("active");
+
+document.querySelectorAll(".nav-btn").forEach(
+b=>b.classList.remove("active")
+);
+
+if(screen==="home")
+document.querySelectorAll(".nav-btn")[0].classList.add("active");
+
+if(screen==="study")
+document.querySelectorAll(".nav-btn")[1].classList.add("active");
+
+if(screen==="questions")
+document.querySelectorAll(".nav-btn")[2].classList.add("active");
+
+if(screen==="progress")
+document.querySelectorAll(".nav-btn")[3].classList.add("active");
+
+if(screen==="profile")
+document.querySelectorAll(".nav-btn")[4].classList.add("active");
+
+window.scrollTo(0,0);
+
+if(screen==="questions")
+loadQuestion();
+
+updateUI();
+
+}
+
+function loadQuestion(){
+
+answeredQuestion=false;
+
+let q=questions[currentQuestion];
+
+let html=`
+<div class="card">
+<div style="color:#35e0bd">
+QUESTÃO ${currentQuestion+1} / ${questions.length}
+</div>
+
+<div class="question">
+${q.question}
+</div>
+`;
+
+q.options.forEach((option,index)=>{
+
+html+=`
+<button class="option"
+onclick="answer(${index},this)">
+${String.fromCharCode(65+index)}) ${option}
+</button>
+`;
+
+});
+
+html+=`
+<div id="explanation"></div>
+</div>
+`;
+
+document.getElementById("questionArea").innerHTML=html;
+
+}
+
+function answer(index,button){
+
+if(answeredQuestion)return;
+
+answeredQuestion=true;
+
+let q=questions[currentQuestion];
+
+let buttons=document.querySelectorAll(".option");
+
+buttons.forEach((b,i)=>{
+
+if(i===q.answer)
+b.classList.add("correct");
+
+});
+
+answered++;
+
+if(index===q.answer){
+
+correct++;
+xp+=25;
+
+button.classList.add("correct");
+
+}else{
+
+button.classList.add("wrong");
+
+}
+
+document.getElementById("explanation").innerHTML=`
+
+<div class="explanation">
+
+<strong>
+${index===q.answer ? "✅ Correto! +25 XP" : "❌ Resposta incorreta"}
+</strong>
+
+<br><br>
+
+${q.explanation}
+
+<br><br>
+
+<button class="main-btn"
+onclick="nextQuestion()">
+PRÓXIMA QUESTÃO
+</button>
+
+</div>
+`;
+
+save();
+
+}
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion>=questions.length)
+currentQuestion=0;
+
+loadQuestion();
+
+}
+
+function openSubject(name){
+
+document.getElementById("subjectTitle").textContent=name;
+
+let contents={
+
+Biologia:"A Biologia estuda os seres vivos, sua organização, funcionamento, evolução e relações com o ambiente.",
+
+Química:"A Química estuda a matéria, sua composição, propriedades, transformações e interações.",
+
+Física:"A Física estuda fenômenos relacionados à matéria, energia, movimento e forças.",
+
+Anatomia:"A Anatomia estuda a estrutura do corpo humano e a relação entre seus órgãos e sistemas."
+
+};
+
+document.getElementById("subjectContent").textContent=
+contents[name] || "Conteúdo em desenvolvimento.";
+
+go("subject");
+
+}
+
+let showingAnswer=false;
+
+function flipCard(){
+
+let card=document.getElementById("flashcard");
+
+if(!showingAnswer){
+
+card.textContent=
+"Transportar oxigênio principalmente através da hemoglobina.";
+
+showingAnswer=true;
+
+}else{
+
+card.textContent=
+"Qual é a principal função das hemácias?";
+
+showingAnswer=false;
+
+}
+
+}
+
+function flashAnswer(level){
+
+xp+=10;
+save();
+
+showingAnswer=false;
+
+document.getElementById("flashcard").textContent=
+"Qual é a principal função das hemácias?";
+
+alert("+"+10+" XP! Flashcard classificado como "+level+".");
+
+}
+
+function clinicalAnswer(button,correctAnswer){
+
+let buttons=document.querySelectorAll("#clinical .option");
+
+buttons.forEach(b=>b.disabled=true);
+
+if(correctAnswer){
+
+button.classList.add("correct");
+
+xp+=30;
+
+document.getElementById("clinicalResult").innerHTML=`
+<div class="explanation">
+<strong>✅ Resposta correta! +30 XP</strong>
+<br><br>
+O quadro apresentado pode ser compatível com uma infecção respiratória.
+Na prática clínica, seria necessária avaliação profissional completa.
+</div>
+`;
+
+}else{
+
+button.classList.add("wrong");
+
+xp+=5;
+
+document.getElementById("clinicalResult").innerHTML=`
+<div class="explanation">
+<strong>❌ Essa não é a melhor opção.</strong>
+<br><br>
+O caso apresenta sinais que podem estar relacionados a uma condição respiratória.
+</div>
+`;
+
+}
+
+save();
+
+}
+
+function toggleTheme(){
+
+document.body.classList.toggle("light");
+
+if(document.body.classList.contains("light")){
+
+document.body.style.background="#f3f6f9";
+document.body.style.color="#17202b";
+
+}else{
+
+document.body.style.background="#07111f";
+document.body.style.color="white";
+
+}
+
+}
+
+function resetProgress(){
+
+if(confirm("Deseja realmente apagar seu progresso?")){
+
+xp=0;
+answered=0;
+correct=0;
+
+save();
+
+alert("Progresso resetado.");
+
+}
+
+}
+
+updateUI();
+
+</script>
+
+</body>
+  </html>
